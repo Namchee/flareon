@@ -1,11 +1,12 @@
-name = "worker-typescript-template"
+name = "flareon"
 type = "javascript"
 zone_id = ""
-account_id = ""
+account_id = "1a99b52ba5412ca55475fdbec4e0ab26"
 route = ""
 workers_dev = true
+compatibility_date = "2021-11-07"
 
 [build]
-command = "pnpm install && pnpm run build"
+command = "pnpm install && pnpm build"
 [build.upload]
 format = "service-worker"

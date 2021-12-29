@@ -1,5 +1,5 @@
-import { handleRequest } from './handler';
+import { writeDaily } from './main';
 
-addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event.request))
+addEventListener('scheduled', event => {
+  event.waitUntil(writeDaily());
 });

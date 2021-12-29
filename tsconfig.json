@@ -10,10 +10,14 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "types": [
-      "@cloudflare/workers-types",
-    ]
+      "@cloudflare/workers-types"
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "src/types.d.ts"],
   "exclude": ["node_modules", "dist", "test"]
 }

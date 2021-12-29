@@ -2,7 +2,7 @@
   "name": "flareon",
   "private": true,
   "version": "1.0.0",
-  "description": "Cloudflare worker TypeScript template",
+  "description": "Daily standup reporter Slack bot for @itsmagic",
   "main": "dist/index.js",
   "scripts": {
     "build": "esbuild --bundle --outdir=dist ./src/index.ts",
@@ -25,13 +25,12 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.16.1",
-    "@typescript-eslint/parser": "^4.16.1",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
     "esbuild": "^0.14.8",
-    "eslint": "^7.21.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-config-typescript": "^3.0.0",
-    "prettier": "^2.3.0",
+    "eslint": "^8.5.0",
+    "eslint-config-xo": "^0.39.0",
+    "eslint-plugin-jsdoc": "^37.4.2",
     "typescript": "^4.3.2",
     "vite": "^2.7.9",
     "vitest": "^0.0.118"
