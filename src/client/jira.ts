@@ -6,8 +6,7 @@ import type { Sprint, SprintAPIResponse } from '@/entity/sprint';
 import type { JIRAUser } from '@/entity/user';
 
 export interface JIRAClient {
-  // eslint-disable-next-line no-unused-vars
-  getIssues(boardId: number): Promise<Issue[]>;
+  getSprintIssues(boardId: number): Promise<Issue[]>;
 }
 
 export class JIRARestClient implements JIRAClient {
@@ -27,7 +26,7 @@ export class JIRARestClient implements JIRAClient {
    * @returns {Promise<Sprint | null>} Current sprint object or `null`
    * if there is no active sprint
    */
-  private async fetchCurrentSprint(boardId: number): Promise<Sprint | null> {
+  private async fetchSprint(boardId: number): Promise<Sprint | null> {
     const params = new URLSearchParams({
       state: 'active',
     });
@@ -102,8 +101,8 @@ export class JIRARestClient implements JIRAClient {
    * @param {number} boardId JIRA board id
    * @returns {Promise<Issue[]>} list of active issues
    */
-  public async getIssues(boardId: number): Promise<Issue[]> {
-    const sprint = await this.fetchCurrentSprint(boardId);
+  public async getSprintIssues(boardId: number): Promise<Issue[]> {
+    const sprint = await this.fetchSprint(boardId);
     if (!sprint) {
       return [];
     }

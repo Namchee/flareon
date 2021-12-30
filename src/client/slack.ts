@@ -2,7 +2,7 @@ import { SLACK_API_URL } from '@/constant/api';
 import { SlackError } from '@/entity/api';
 import { Issue } from '@/entity/issue';
 import { User, UserAPIResponse } from '@/entity/user';
-import { snakecaseToCapitalized } from '@/utils';
+import { snakecaseToCapitalized } from '@/service/formatter';
 
 export interface SlackClient {
   postDailyTasks(issues: Issue[]): Promise<void>;
@@ -18,6 +18,12 @@ export class SlackRESTClient implements SlackClient {
     };
   }
 
+  /**
+   * Search Slack user by its email
+   *
+   * @param {string} email user email
+   * @returns {Promise<User>} slack user
+   */
   private async getUserByEmail(email: string): Promise<User> {
     const params = new URLSearchParams({
       email,

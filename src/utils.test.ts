@@ -1,36 +1,43 @@
-import { describe, it, expect } from 'vitest';
-import { bold, bracketize, snakecaseToCapitalized } from './utils';
+import { describe, expect, it } from 'vitest';
+import { getCurrentDate } from './utils';
 
-describe('snakecaseToSentence', () => {
-  it.concurrent('should transform snake_case to capitalize', () => {
-    const input = 'foo_bar';
-    const output = snakecaseToCapitalized(input);
+describe('getCurrentDate', () => {
+  const days = [
+    'Senin',
+    'Selasa',
+    'Rabu',
+    'Kamis',
+    'Jumat',
+    'Sabtu',
+    'Minggu',
+  ];
 
-    expect(output).toBe('Foo Bar');
-  });
+  const months = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
+  ];
 
-  it.concurrent('should not perform any changes', () => {
-    const input = 'Foo Bar';
-    const output = snakecaseToCapitalized(input);
+  it('should output localized date', () => {
+    const pattern = /(\w+), (\d+) (\w+) (\d+)/;
+    const output = getCurrentDate();
 
-    expect(output).toBe(input);
-  });
-});
+    expect(output).toMatch(pattern);
 
-describe('bold', () => {
-  it('should format text to bold markdown text', () => {
-    const input = 'foo';
-    const output = bold(input);
+    const matches = output.match(pattern) as string[];
 
-    expect(output).toBe('*foo*');
-  });
-});
-
-describe('bracketize', () => {
-  it('should enclose text with square brackets', () => {
-    const input = 'foo';
-    const output = bracketize(input);
-
-    expect(output).toBe('[foo]');
+    expect(days).toContain(matches[1]);
+    expect(Number.parseInt(matches[2], 10)).not.toBeNaN();
+    expect(months).toContain(matches[3]);
+    expect(Number.parseInt(matches[4], 10)).not.toBeNaN();
   });
 });

@@ -1,5 +1,5 @@
 import { JiraAPIResponse } from '@/entity/api';
-import { bold, bracketize } from '@/utils';
+import { bold, bracketize } from '@/service/formatter';
 
 export interface RawIssue {
   expand?: string;
