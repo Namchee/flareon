@@ -9,3 +9,7 @@ export interface JiraAPIResponse {
 export interface SlackAPIResponse {
   ok: boolean;
 }
+
+export interface SlackError extends SlackAPIResponse {
+  error: string;
+}
