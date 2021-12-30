@@ -1,4 +1,4 @@
-import { APIResponse } from './api';
+import { JiraAPIResponse } from './api';
 
 export interface Sprint {
   id: number;
@@ -9,6 +9,6 @@ export interface Sprint {
   originBoardId: number;
 }
 
-export interface SprintAPIResponse extends APIResponse {
+export interface SprintAPIResponse extends JiraAPIResponse {
   values: Sprint[];
 }

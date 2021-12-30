@@ -1,7 +1,8 @@
 export {};
 
 declare global {
-  const API_TOKEN: string;
+  const JIRA_TOKEN: string;
+  const SLACK_TOKEN: string;
   const EMAIL: string;
   const BOARD_ID: number;
 }

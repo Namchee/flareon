@@ -3,7 +3,8 @@ export interface JIRAUser {
   displayName: string;
 }
 
-export interface User {
-  email: string;
+export interface SlackUser {
+  id: string;
   name: string;
+  realName: string;
 }

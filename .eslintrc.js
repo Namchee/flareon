@@ -4,7 +4,8 @@ module.exports = {
     es2021: true,
   },
   globals: {
-    API_TOKEN: 'readonly',
+    JIRA_TOKEN: 'readonly',
+    SLACK_TOKEN: 'readonly',
     EMAIL: 'readonly',
     BOARD_ID: 'readonly',
   },
@@ -52,6 +53,7 @@ module.exports = {
         ],
       },
     ],
+    'no-undef': 'off',
     'no-unused-vars': 'off',
   },
 };

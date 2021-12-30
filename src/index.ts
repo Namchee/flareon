@@ -1,5 +1,5 @@
 import { writeDaily } from './main';
 
-addEventListener('scheduled', event => {
+addEventListener('scheduled', (event: ScheduledEvent) => {
   event.waitUntil(writeDaily());
 });

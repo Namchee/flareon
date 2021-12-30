@@ -1,5 +1,4 @@
-import { APIResponse } from '@/entity/api';
-import { User } from '@/entity/user';
+import { JiraAPIResponse } from '@/entity/api';
 
 export interface RawIssue {
   expand?: string;
@@ -11,7 +10,7 @@ export interface RawIssue {
 
 export interface Issue {
   id: string;
-  assignee: User;
+  assignee: string;
   title: string;
   label: string[];
   status: string;
@@ -24,6 +23,6 @@ export interface IssueStatus {
   id: string;
 }
 
-export interface IssueAPIResponse extends APIResponse {
+export interface IssueAPIResponse extends JiraAPIResponse {
   issues: RawIssue[];
 }

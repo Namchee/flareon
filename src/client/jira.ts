@@ -1,4 +1,4 @@
-import { API_URL } from '@/constant/jira';
+import { JIRA_API_URL } from '@/constant/api';
 
 import type { Credentials } from '@/entity/creds';
 import type { RawIssue, IssueAPIResponse, Issue, IssueStatus } from '@/entity/issue';
@@ -6,17 +6,18 @@ import type { Sprint, SprintAPIResponse } from '@/entity/sprint';
 import type { JIRAUser } from '@/entity/user';
 
 export interface JIRAClient {
+  // eslint-disable-next-line no-unused-vars
   getIssues(boardId: number): Promise<Issue[]>;
 }
 
 export class JIRARestClient implements JIRAClient {
-  private readonly headers: Headers;
+  private readonly headers: Record<string, string>;
 
   public constructor({ email, token }: Credentials) {
-    this.headers = new Headers({
+    this.headers = {
       Accept: 'application/json',
       Authorization: 'Basic ' + btoa(`${email}:${token}`),
-    });
+    };
   }
 
   /**
@@ -30,11 +31,15 @@ export class JIRARestClient implements JIRAClient {
     const params = new URLSearchParams({
       state: 'active',
     });
-    const sprintUrl = `${API_URL}/board/${boardId}/sprint?${params.toString()}`;
+    const sprintUrl = `${JIRA_API_URL}/board/${boardId}/sprint?${params.toString()}`;
 
     const response = await fetch(sprintUrl, {
       headers: this.headers,
     });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get the current sprint: ${response.statusText}`);
+    }
 
     const { values }: SprintAPIResponse = await response.json();
 
@@ -48,11 +53,15 @@ export class JIRARestClient implements JIRAClient {
    * @returns {Promise<RawIssue[]>} List of issues for the sprint
    */
   private async fetchSprintIssues(sprintId: number): Promise<RawIssue[]> {
-    const sprintUrl = `${API_URL}/sprint/${sprintId}/issue`;
+    const sprintUrl = `${JIRA_API_URL}/sprint/${sprintId}/issue`;
 
     const response = await fetch(sprintUrl, {
       headers: this.headers,
     });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get issues for sprint: ${response.statusText}`);
+    }
 
     const { issues }: IssueAPIResponse = await response.json();
 
@@ -66,7 +75,7 @@ export class JIRARestClient implements JIRAClient {
    * @returns {Issue} issue with just the relevant data
    */
   private mapRawIssueToIssue(issue: RawIssue): Issue {
-    const label = (issue.fields.summary as string).match(/(\[(.*?)\])/g);
+    const label = (issue.fields.summary as string).match(/\[(.*?)\]/g);
 
     let title = issue.fields.summary as string;
     label?.forEach(l => {
@@ -74,17 +83,16 @@ export class JIRARestClient implements JIRAClient {
     });
     title = title.trim();
 
-    const jiraUser = issue.fields.assignee as JIRAUser;
+    const { emailAddress } = issue.fields.assignee as JIRAUser;
 
     return {
       id: issue.key,
-      label: label ?? [],
+      label: label && label.length
+        ? label.map(l => l.slice(1, l.length - 1))
+        : [],
       title,
       status: (issue.fields.status as IssueStatus).name,
-      assignee: {
-        email: jiraUser.emailAddress,
-        name: jiraUser.displayName,
-      },
+      assignee: emailAddress,
     };
   }
 
