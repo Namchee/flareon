@@ -6,7 +6,7 @@ export async function writeDaily(): Promise<void> {
     token: API_TOKEN,
   });
 
-  const issues = await jiraClient.fetchCurrentIssues(BOARD_ID);
+  const issues = await jiraClient.getIssues(BOARD_ID);
 
-  console.log(issues[0].fields['assignee']);
+  console.log(issues);
 }
