@@ -29,7 +29,9 @@ export class SlackRESTService implements SlackService {
       email,
     });
     const url = `${SLACK_API_URL}/user.lookupByEmail?${params.toString()}`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: this.headers,
+    });
     const result = await response.json();
 
     if (!response.ok) {
