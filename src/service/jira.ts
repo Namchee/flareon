@@ -5,11 +5,11 @@ import type { RawIssue, IssueAPIResponse, Issue, IssueStatus } from '@/entity/is
 import type { Sprint, SprintAPIResponse } from '@/entity/sprint';
 import type { JIRAUser } from '@/entity/user';
 
-export interface JIRAClient {
+export interface JIRAService {
   getSprintIssues(boardId: number): Promise<Issue[]>;
 }
 
-export class JIRARestClient implements JIRAClient {
+export class JiraRESTService implements JIRAService {
   private readonly headers: Record<string, string>;
 
   public constructor({ email, token }: Credentials) {

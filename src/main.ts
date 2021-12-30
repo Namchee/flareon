@@ -1,12 +1,12 @@
-import { JIRARestClient } from './client/jira';
+import { JiraRESTService } from '@/service/jira';
 
 export async function writeDaily(): Promise<void> {
-  const jiraClient = new JIRARestClient({
+  const jiraService = new JiraRESTService({
     email: EMAIL,
     token: JIRA_TOKEN,
   });
 
-  const issues = await jiraClient.getIssues(BOARD_ID);
+  const issues = await jiraService.getSprintIssues(BOARD_ID);
 
   console.log(issues);
 }

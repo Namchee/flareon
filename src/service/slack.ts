@@ -4,11 +4,11 @@ import { Issue } from '@/entity/issue';
 import { User, UserAPIResponse } from '@/entity/user';
 import { snakecaseToCapitalized } from '@/service/formatter';
 
-export interface SlackClient {
+export interface SlackService {
   postDailyTasks(issues: Issue[]): Promise<void>;
 }
 
-export class SlackRESTClient implements SlackClient {
+export class SlackRESTService implements SlackService {
   private readonly headers: Record<string, string>;
 
   public constructor(token: string) {

@@ -7,8 +7,7 @@
   "scripts": {
     "build": "esbuild --bundle --outdir=dist ./src/index.ts",
     "lint": "eslint ./src/**/*.ts",
-    "test": "vitest",
-    "coverage": "vitest --coverage",
+    "test": "vitest --coverage",
     "dev": "miniflare --watch --debug --port 3000"
   },
   "author": {
