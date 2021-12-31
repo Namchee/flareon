@@ -49,6 +49,14 @@ export class SlackRESTService implements SlackService {
   }
 
   public async postDailyTasks(issues: Issue[]): Promise<void> {
-    
+    const issueMap: Record<string, Issue[]> = {};
+
+    issues.forEach(i => {
+      if (!issueMap[i.assignee]) {
+        issueMap[i.assignee] = [];
+      }
+
+      issueMap[i.assignee].push(i);
+    });
   }
 }
