@@ -46,17 +46,6 @@ export class JiraRESTService implements JIRAService {
   }
 
   /**
- * Format a string for Slack mentions
- *
- * @param {string} id entity ID
- * @param {MentionContext?} ctx mention context, you don't usually need this
- * @returns {string} string in Slack mention format
- */
-private mention(id: string, ctx?: MentionContext): string {
-  
-}
-
-  /**
    * Get all issues for a sprint
    *
    * @param {number} sprintId JIRA sprint id

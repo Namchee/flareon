@@ -1,12 +1,21 @@
-import { SLACK_API_URL } from '@/constant/api';
-import { SlackError } from '@/entity/api';
-import { formatIssueToListItem, Issue, mapIssuesToAssignee } from '@/entity/issue';
-import { User, UserAPIResponse } from '@/entity/user';
+import { formatIssueToListItem, mapIssuesToAssignee } from '@/entity/issue';
+
 import { bold, snakecaseToCapitalized } from '@/service/formatter';
 import { getCurrentDate } from '@/utils';
 
+import { SLACK_API_URL } from '@/constant/api';
+
+import type { Issue } from '@/entity/issue';
+import type { MessageBlock } from '@/entity/message';
+import type { User, UserAPIResponse } from '@/entity/user';
+import type { SlackError } from '@/entity/api';
+
 export interface SlackService {
-  postDailyTasks(issues: Issue[]): Promise<void>;
+  postDailyReport(
+    teamId: string,
+    channelId: string,
+    issues: Issue[],
+  ): Promise<void>;
 }
 
 export class SlackRESTService implements SlackService {
@@ -65,38 +74,72 @@ export class SlackRESTService implements SlackService {
    *
    * @param {string} teamId Slack team ID
    * @param {Record<string, Issue[]>} issueMap assignee to issues object map
-   * @returns {string} daily standup report string
+   * @returns {Promise<MessageBlock[]>} Slack message blocks
    */
   private async formatTasks(
     teamId: string,
     issueMap: Record<string, Issue[]>,
-  ): Promise<string> {
-    const header = bold(`Daily Standup ${getCurrentDate()} — ${this.mention(teamId, true)}`);
+  ): Promise<MessageBlock[]> {
+    const header: MessageBlock = {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: bold(`Daily Standup ${getCurrentDate()} — ${this.mention(teamId, true)}`),
+      },
+    };
+
     const content = Object.entries(issueMap).map(async ([mail, issues]) => {
       const { id, name } = await this.getUserByEmail(mail);
       const head = `${name} — ${this.mention(id, false)}`;
 
       const tasks = issues.map(i => formatIssueToListItem(i)).join('\n');
 
-      return [head, tasks].join('\n\n');
+      return {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: [head, tasks].join('\n\n'),
+        },
+      } as MessageBlock;
     });
 
     const body = await Promise.all(content);
 
-    return [header, ...body].join('\n\n');
+    return [header, ...body];
   }
 
-  public async postDailyTasks(
+  /**
+   * Post daily standup report to appropriate channel
+   *
+   * @param {string} teamId Slack team id
+   * @param {string} channelId Slack channel id
+   * @param {Issue[]} issues list of issues
+   */
+  public async postDailyReport(
     teamId: string,
+    channelId: string,
     issues: Issue[],
   ): Promise<void> {
     const issueMap = mapIssuesToAssignee(issues);
 
     const content = this.formatTasks(teamId, issueMap);
+    const reqBody = {
+      channel: channelId,
+      blocks: content,
+    };
 
     const response = await fetch(`${SLACK_API_URL}/chat.postMessage`, {
       method: 'POST',
+      body: JSON.stringify(reqBody),
       headers: this.headers,
     });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      const { error } = result as SlackError;
+
+      throw new Error(`Failed to post daily report: ${snakecaseToCapitalized(error)}`);
+    }
   }
 }
