@@ -1,5 +1,5 @@
-import { writeDaily } from './main';
+import { writeDailyReport } from './main';
 
 addEventListener('scheduled', (event: ScheduledEvent) => {
-  event.waitUntil(writeDaily());
+  event.waitUntil(writeDailyReport());
 });

@@ -1,12 +1,23 @@
 import { JiraRESTService } from '@/service/jira';
+import { SlackRESTService } from './service/slack';
 
-export async function writeDaily(): Promise<void> {
-  const jiraService = new JiraRESTService({
-    email: EMAIL,
-    token: JIRA_TOKEN,
-  });
+/**
+ * Write daily report to team's Slack channel
+ */
+export async function writeDailyReport(): Promise<void> {
+  try {
+    const jiraService = new JiraRESTService({
+      email: EMAIL,
+      token: JIRA_TOKEN,
+    });
+    const slackService = new SlackRESTService(SLACK_TOKEN);
 
-  const issues = await jiraService.getSprintIssues(BOARD_ID);
+    const issues = await jiraService.getSprintIssues(BOARD_ID);
 
-  console.log(issues);
+    await slackService.postDailyReport(TEAM_ID, CHANNEL_ID, issues);
+
+    console.log('Successfully posted daily report');
+  } catch (err) {
+    console.error(err);
+  }
 }
