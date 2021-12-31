@@ -8,6 +8,7 @@ module.exports = {
     SLACK_TOKEN: 'readonly',
     EMAIL: 'readonly',
     BOARD_ID: 'readonly',
+    TEAM_ID: 'readonly',
   },
   extends: [
     'eslint:recommended',

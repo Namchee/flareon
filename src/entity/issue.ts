@@ -42,6 +42,7 @@ export function formatIssueToListItem(
   const stat = bold(status.toUpperCase());
 
   return [
+    '-',
     key,
     labels,
     title,

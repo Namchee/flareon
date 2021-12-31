@@ -1,8 +1,9 @@
 import { SLACK_API_URL } from '@/constant/api';
 import { SlackError } from '@/entity/api';
-import { Issue } from '@/entity/issue';
+import { formatIssueToListItem, Issue, mapIssuesToAssignee } from '@/entity/issue';
 import { User, UserAPIResponse } from '@/entity/user';
-import { snakecaseToCapitalized } from '@/service/formatter';
+import { bold, snakecaseToCapitalized } from '@/service/formatter';
+import { getCurrentDate } from '@/utils';
 
 export interface SlackService {
   postDailyTasks(issues: Issue[]): Promise<void>;
@@ -48,15 +49,54 @@ export class SlackRESTService implements SlackService {
     };
   }
 
-  public async postDailyTasks(issues: Issue[]): Promise<void> {
-    const issueMap: Record<string, Issue[]> = {};
+  /**
+   * Format a string for Slack mentions
+   *
+   * @param {string} id entity ID
+   * @param {boolean} group whether if the mention target is a Slack team
+   * @returns {string} string in Slack mention format
+   */
+  private mention(id: string, group: boolean): string {
+    return group ? `<!subteam^${id}>` : `<@${id}>`;
+  }
 
-    issues.forEach(i => {
-      if (!issueMap[i.assignee]) {
-        issueMap[i.assignee] = [];
-      }
+  /**
+   * Format daily report to Slack markdown
+   *
+   * @param {string} teamId Slack team ID
+   * @param {Record<string, Issue[]>} issueMap assignee to issues object map
+   * @returns {string} daily standup report string
+   */
+  private async formatTasks(
+    teamId: string,
+    issueMap: Record<string, Issue[]>,
+  ): Promise<string> {
+    const header = bold(`Daily Standup ${getCurrentDate()} — ${this.mention(teamId, true)}`);
+    const content = Object.entries(issueMap).map(async ([mail, issues]) => {
+      const { id, name } = await this.getUserByEmail(mail);
+      const head = `${name} — ${this.mention(id, false)}`;
 
-      issueMap[i.assignee].push(i);
+      const tasks = issues.map(i => formatIssueToListItem(i)).join('\n');
+
+      return [head, tasks].join('\n\n');
+    });
+
+    const body = await Promise.all(content);
+
+    return [header, ...body].join('\n\n');
+  }
+
+  public async postDailyTasks(
+    teamId: string,
+    issues: Issue[],
+  ): Promise<void> {
+    const issueMap = mapIssuesToAssignee(issues);
+
+    const content = this.formatTasks(teamId, issueMap);
+
+    const response = await fetch(`${SLACK_API_URL}/chat.postMessage`, {
+      method: 'POST',
+      headers: this.headers,
     });
   }
 }
