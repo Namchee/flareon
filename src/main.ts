@@ -14,9 +14,11 @@ export async function writeDailyReport(): Promise<void> {
 
     const issues = await jiraService.getSprintIssues(BOARD_ID);
 
-    await slackService.postDailyReport(TEAM_ID, CHANNEL_ID, issues);
+    if (issues.length) {
+      await slackService.postDailyReport(TEAM_ID, CHANNEL_ID, issues);
+    }
 
-    console.log('Successfully posted daily report');
+    console.log('Process finished successfully');
   } catch (err) {
     console.error(err);
   }
