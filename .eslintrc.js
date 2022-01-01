@@ -16,6 +16,10 @@ module.exports = {
     'jsdoc',
   ],
   rules: {
+    'linebreak-style': [
+      'error',
+      'windows',
+    ],
     indent: [
       'error',
       2,
