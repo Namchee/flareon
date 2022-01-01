@@ -3,13 +3,6 @@ module.exports = {
     serviceworker: true,
     es2021: true,
   },
-  globals: {
-    JIRA_TOKEN: 'readonly',
-    SLACK_TOKEN: 'readonly',
-    EMAIL: 'readonly',
-    BOARD_ID: 'readonly',
-    TEAM_ID: 'readonly',
-  },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
