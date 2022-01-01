@@ -1,5 +1,6 @@
-import { SLACK_API_URL } from '@/constant/api';
 import { rest } from 'msw';
+
+import { SLACK_API_URL } from '@/constant/api';
 
 export const handlers = [
   rest.get(`${SLACK_API_URL}/user.lookupByEmail`, (req, res, ctx) => {
@@ -33,6 +34,18 @@ export const handlers = [
         ctx.json({
           ok: false,
           error: 'unathorized',
+        }),
+      );
+    }
+
+    const body = JSON.parse(req.body as string);
+
+    if (body.channel === '123') {
+      return res(
+        ctx.status(404),
+        ctx.json({
+          ok: false,
+          error: 'channel_not_found',
         }),
       );
     }

@@ -122,7 +122,7 @@ export class SlackRESTService implements SlackService {
   ): Promise<void> {
     const issueMap = mapIssuesToAssignee(issues);
 
-    const content = this.formatTasks(teamId, issueMap);
+    const content = await this.formatTasks(teamId, issueMap);
     const reqBody = {
       channel: channelId,
       blocks: content,
