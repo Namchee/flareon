@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { bold, bracketize, snakecaseToCapitalized } from './formatter';
+import { bold, bracketize, snakecaseToCapitalized } from '@/service/formatter';
 
 describe('snakecaseToCapitalized', () => {
   it.concurrent('should transform snake_case to capitalize', () => {

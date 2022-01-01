@@ -1,5 +1,5 @@
 import { JiraRESTService } from '@/service/jira';
-import { SlackRESTService } from './service/slack';
+import { SlackRESTService } from '@/service/slack';
 
 /**
  * Write daily report to team's Slack channel

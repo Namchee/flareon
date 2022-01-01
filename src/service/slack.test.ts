@@ -1,9 +1,11 @@
 import fetch from 'cross-fetch';
 import { describe, it, beforeAll, afterEach, afterAll, expect } from 'vitest';
 
+import { SlackRESTService } from '@/service/slack';
+
 import { slackMockServer } from '@/mocks/server';
-import { SlackRESTService } from './slack';
-import { Issue } from '@/entity/issue';
+
+import type { Issue } from '@/entity/issue';
 
 describe('Slack REST Service', () => {
   beforeAll(() => {

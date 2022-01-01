@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getCurrentDate } from './utils';
+import { getCurrentDate } from '@/utils';
 
 describe('getCurrentDate', () => {
   const days = [
