@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { bold, bracketize, snakecaseToCapitalized } from '@/service/formatter';
+import { bold, bracketize, linkify, snakecaseToCapitalized } from '@/service/formatter';
 
 describe('snakecaseToCapitalized', () => {
   it.concurrent('should transform snake_case to capitalize', () => {
@@ -32,5 +32,15 @@ describe('bracketize', () => {
     const output = bracketize(input);
 
     expect(output).toBe('[foo]');
+  });
+});
+
+describe('bracketize', () => {
+  it('should generate markdown link', () => {
+    const text = 'https://www.google.com';
+    const alias = 'Google link';
+    const output = linkify(text, alias);
+
+    expect(output).toBe('[Google link](https://www.google.com)');
   });
 });

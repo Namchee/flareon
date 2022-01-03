@@ -6,6 +6,7 @@ import { SlackRESTService } from '@/service/slack';
 import { slackMockServer } from '@/mocks/server';
 
 import type { Issue } from '@/entity/issue';
+import { Footer } from '@/entity/message';
 
 describe('Slack REST Service', () => {
   beforeAll(() => {
@@ -100,5 +101,71 @@ describe('Slack REST Service', () => {
     const service = new SlackRESTService(token);
 
     await service.postDailyReport('13', 'realChannel', issues);
+  });
+
+  it('should post daily report successfully', async () => {
+    const token = 'realToken';
+    const issues: Issue[] = [
+      {
+        id: 'BTDC-456',
+        title: 'Foo Bar',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+      {
+        id: 'BTDC-123',
+        title: 'Bar Baz',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+      {
+        id: 'BTDC-123',
+        title: 'Bar Baz',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+    ];
+
+    const service = new SlackRESTService(token);
+
+    await service.postDailyReport('13', 'realChannl', issues);
+  });
+
+  it('should post daily report successfully with footer', async () => {
+    const token = 'realToken';
+    const issues: Issue[] = [
+      {
+        id: 'BTDC-456',
+        title: 'Foo Bar',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+      {
+        id: 'BTDC-123',
+        title: 'Bar Baz',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+      {
+        id: 'BTDC-123',
+        title: 'Bar Baz',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+    ];
+    const footer: Footer = {
+      link: 'https://www.google.com',
+      alias: 'Google link',
+    };
+
+    const service = new SlackRESTService(token);
+
+    await service.postDailyReport('13', 'realChannl', issues, footer);
   });
 });
