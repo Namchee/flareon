@@ -20,6 +20,6 @@ export interface MessageBlockText {
 }
 
 export interface Footer {
-  text: string;
+  link: string;
   alias?: string;
 }

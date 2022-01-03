@@ -114,7 +114,7 @@ export class SlackRESTService implements SlackService {
       elements: [
         {
           type: 'mrkdwn',
-          text: footer.alias ? linkify(footer.text, footer.alias) : footer.text,
+          text: footer.alias ? linkify(footer.link, footer.alias) : footer.link,
         },
       ],
     };

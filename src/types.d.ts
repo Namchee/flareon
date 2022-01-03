@@ -7,4 +7,5 @@ declare global {
   const BOARD_ID: number;
   const TEAM_ID: string;
   const CHANNEL_ID: string;
+  const FOOTER: string;
 }
