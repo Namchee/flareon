@@ -1,12 +1,12 @@
 import { formatIssueToListItem, mapIssuesToAssignee } from '@/entity/issue';
 
-import { bold, snakecaseToCapitalized } from '@/service/formatter';
+import { bold, linkify, snakecaseToCapitalized } from '@/service/formatter';
 import { getCurrentDate } from '@/utils';
 
 import { SLACK_API_URL } from '@/constant/api';
 
 import type { Issue } from '@/entity/issue';
-import type { MessageBlock } from '@/entity/message';
+import type { Footer, MessageBlock, MessageContextBlock, MessageTextBlock } from '@/entity/message';
 import type { User, UserAPIResponse } from '@/entity/user';
 import type { SlackError } from '@/entity/api';
 
@@ -74,13 +74,13 @@ export class SlackRESTService implements SlackService {
    *
    * @param {string} teamId Slack team ID
    * @param {Record<string, Issue[]>} issueMap assignee to issues object map
-   * @returns {Promise<MessageBlock[]>} Slack message blocks
+   * @returns {Promise<MessageTextBlock[]>} Slack message blocks
    */
   private async formatTasks(
     teamId: string,
     issueMap: Record<string, Issue[]>,
-  ): Promise<MessageBlock[]> {
-    const header: MessageBlock = {
+  ): Promise<MessageTextBlock[]> {
+    const header: MessageTextBlock = {
       type: 'section',
       text: {
         type: 'mrkdwn',
@@ -100,12 +100,24 @@ export class SlackRESTService implements SlackService {
           type: 'mrkdwn',
           text: [head, tasks].join('\n\n'),
         },
-      } as MessageBlock;
+      } as MessageTextBlock;
     });
 
     const body = await Promise.all(content);
 
     return [header, ...body];
+  }
+
+  private formatFooter(footer: Footer): MessageContextBlock {
+    return {
+      type: 'context',
+      elements: [
+        {
+          type: 'mrkdwn',
+          text: footer.alias ? linkify(footer.text, footer.alias) : footer.text,
+        },
+      ],
+    };
   }
 
   /**
@@ -114,15 +126,21 @@ export class SlackRESTService implements SlackService {
    * @param {string} teamId Slack team id
    * @param {string} channelId Slack channel id
    * @param {Issue[]} issues list of issues
+   * @param {Footer?} footer message footer
    */
   public async postDailyReport(
     teamId: string,
     channelId: string,
     issues: Issue[],
+    footer?: Footer,
   ): Promise<void> {
     const issueMap = mapIssuesToAssignee(issues);
 
-    const content = await this.formatTasks(teamId, issueMap);
+    const content: MessageBlock[] = await this.formatTasks(teamId, issueMap);
+    if (footer) {
+      content.push(this.formatFooter(footer));
+    }
+
     const reqBody = {
       channel: channelId,
       blocks: content,

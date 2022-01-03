@@ -27,3 +27,14 @@ export function bold(str: string): string {
 export function bracketize(str: string): string {
   return `[${str}]`;
 }
+
+/**
+ * Generate markdown link from an URl
+ *
+ * @param {string} link input URL
+ * @param {string} alias URL alias
+ * @returns {string} markdown link
+ */
+export function linkify(link: string, alias: string): string {
+  return `[${alias}](${link})`;
+}
