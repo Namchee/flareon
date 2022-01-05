@@ -2,8 +2,10 @@ import { rest } from 'msw';
 
 import { JIRA_API_URL } from '@/constant/api';
 
+const url = new URL(JIRA_API_URL, 'https://test.jira.net').toString();
+
 export const handlers = [
-  rest.get(`https://test.jira.net/${JIRA_API_URL}/board/123/sprint`, (req, res, ctx) => {
+  rest.get(`${url}/board/123/sprint`, (req, res, ctx) => {
     if (
       !req.headers.get('Authorization')
       || req.headers.get('Authorization')?.endsWith('Zm9vOmJhcg==')
@@ -26,14 +28,14 @@ export const handlers = [
     );
   }),
 
-  rest.get(`https://test.jira.net/${JIRA_API_URL}/board/124/sprint`, (_, res, ctx) => res(
+  rest.get(`${url}/board/124/sprint`, (_, res, ctx) => res(
     ctx.status(200),
     ctx.json({
       values: [],
     }),
   )),
 
-  rest.get(`https://test.jira.net/${JIRA_API_URL}/sprint/123/issue`, (_, res, ctx) => res(
+  rest.get(`${url}/sprint/123/issue`, (_, res, ctx) => res(
     ctx.status(200),
     ctx.json({
       issues: [

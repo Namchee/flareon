@@ -14,7 +14,8 @@ export class JiraRESTService implements JIRAService {
   private readonly headers: Record<string, string>;
 
   public constructor(host: string, { email, token }: Credentials) {
-    this.url = host + JIRA_API_URL;
+    this.url = new URL(JIRA_API_URL, host).toString();
+    console.log(this.url);
     this.headers = {
       Accept: 'application/json',
       Authorization: 'Basic ' + btoa(`${email}:${token}`),
