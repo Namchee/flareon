@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch';
+
 import { describe, it, beforeAll, afterEach, afterAll, expect } from 'vitest';
 
 import { SlackRESTService } from '@/service/slack';
@@ -6,7 +7,7 @@ import { SlackRESTService } from '@/service/slack';
 import { slackMockServer } from '@/mocks/server';
 
 import type { Issue } from '@/entity/issue';
-import { Footer } from '@/entity/message';
+import type { Footer } from '@/entity/message';
 
 describe('Slack REST Service', () => {
   beforeAll(() => {
@@ -109,7 +110,7 @@ describe('Slack REST Service', () => {
       {
         id: 'BTDC-456',
         title: 'Foo Bar',
-        label: [],
+        label: ['Bar', 'Baz'],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
       },
@@ -126,6 +127,13 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+      },
+      {
+        id: 'BTDC-456',
+        title: 'Bar Baz',
+        label: [],
+        status: 'Done',
+        assignee: null,
       },
     ];
 

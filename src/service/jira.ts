@@ -10,9 +10,12 @@ export interface JIRAService {
 }
 
 export class JiraRESTService implements JIRAService {
+  private readonly url: string;
   private readonly headers: Record<string, string>;
 
-  public constructor({ email, token }: Credentials) {
+  public constructor(host: string, { email, token }: Credentials) {
+    this.url = new URL(JIRA_API_URL, host).toString();
+    console.log(this.url);
     this.headers = {
       Accept: 'application/json',
       Authorization: 'Basic ' + btoa(`${email}:${token}`),
@@ -30,7 +33,7 @@ export class JiraRESTService implements JIRAService {
     const params = new URLSearchParams({
       state: 'active',
     });
-    const sprintUrl = `${JIRA_API_URL}/board/${boardId}/sprint?${params.toString()}`;
+    const sprintUrl = `${this.url}/board/${boardId}/sprint?${params.toString()}`;
 
     const response = await fetch(sprintUrl, {
       headers: this.headers,
@@ -52,7 +55,7 @@ export class JiraRESTService implements JIRAService {
    * @returns {Promise<RawIssue[]>} List of issues for the sprint
    */
   private async fetchSprintIssues(sprintId: number): Promise<RawIssue[]> {
-    const sprintUrl = `${JIRA_API_URL}/sprint/${sprintId}/issue`;
+    const sprintUrl = `${this.url}/sprint/${sprintId}/issue`;
 
     const response = await fetch(sprintUrl, {
       headers: this.headers,
@@ -82,7 +85,9 @@ export class JiraRESTService implements JIRAService {
     });
     title = title.trim();
 
-    const { emailAddress } = issue.fields.assignee as JIRAUser;
+    const email = issue.fields.assignee
+      ? (issue.fields.assignee as JIRAUser).emailAddress
+      : null;
 
     return {
       id: issue.key,
@@ -91,7 +96,7 @@ export class JiraRESTService implements JIRAService {
         : [],
       title,
       status: (issue.fields.status as IssueStatus).name,
-      assignee: emailAddress,
+      assignee: email,
     };
   }
 

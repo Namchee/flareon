@@ -88,4 +88,76 @@ describe('mapIssuesToAssignee', () => {
       ],
     });
   });
+
+  it('should map unassigned issues', () => {
+    const issues: Issue[] = [
+      {
+        id: 'BTDC-1000',
+        title: 'a',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+      {
+        id: 'BTDC-1020',
+        title: 'b',
+        label: [],
+        status: 'Done',
+        assignee: 'a@b.com',
+      },
+      {
+        id: 'BTDC-820',
+        title: 'c',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+      },
+      {
+        id: 'BTDC-123',
+        title: 'a',
+        label: [],
+        status: 'Backlog',
+        assignee: null,
+      },
+    ];
+
+    const issueMap = mapIssuesToAssignee(issues);
+
+    expect(issueMap).toEqual({
+      'a@b.com': [
+        {
+          id: 'BTDC-1020',
+          title: 'b',
+          label: [],
+          status: 'Done',
+          assignee: 'a@b.com',
+        },
+      ],
+      'lorem@ipsum.com': [
+        {
+          id: 'BTDC-820',
+          title: 'c',
+          label: [],
+          status: 'Done',
+          assignee: 'lorem@ipsum.com',
+        },
+        {
+          id: 'BTDC-1000',
+          title: 'a',
+          label: [],
+          status: 'Done',
+          assignee: 'lorem@ipsum.com',
+        },
+      ],
+      Unassigned: [
+        {
+          id: 'BTDC-123',
+          title: 'a',
+          label: [],
+          status: 'Backlog',
+          assignee: null,
+        },
+      ],
+    });
+  });
 });

@@ -5,6 +5,8 @@ import { JiraRESTService } from '@/service/jira';
 import { jiraMockServer } from '@/mocks/server';
 
 describe('JIRA REST Service', () => {
+  const jiraHost = 'https://test.jira.net/';
+
   beforeAll(() => {
     global.fetch = fetch;
     jiraMockServer.listen();
@@ -19,10 +21,13 @@ describe('JIRA REST Service', () => {
   });
 
   it.concurrent('should return empty array when there is no active sprint', async () => {
-    const service = new JiraRESTService({
-      email: 'bar',
-      token: 'baz',
-    });
+    const service = new JiraRESTService(
+      jiraHost,
+      {
+        email: 'bar',
+        token: 'baz',
+      },
+    );
 
     const issues = await service.getSprintIssues(124);
 
@@ -31,10 +36,13 @@ describe('JIRA REST Service', () => {
 
   it.concurrent('should throw an unauthenticated error', async () => {
     try {
-      const service = new JiraRESTService({
-        email: 'foo',
-        token: 'bar',
-      });
+      const service = new JiraRESTService(
+        jiraHost,
+        {
+          email: 'foo',
+          token: 'bar',
+        },
+      );
 
       await service.getSprintIssues(123);
 
@@ -47,10 +55,13 @@ describe('JIRA REST Service', () => {
   });
 
   it.concurrent('should return a list of issues', async () => {
-    const service = new JiraRESTService({
-      email: 'bar',
-      token: 'baz',
-    });
+    const service = new JiraRESTService(
+      jiraHost,
+      {
+        email: 'bar',
+        token: 'baz',
+      },
+    );
 
     const issues = await service.getSprintIssues(123);
 
