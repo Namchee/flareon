@@ -1,3 +1,4 @@
+import { UNASSIGNED } from '@/constant/issue';
 import { JiraAPIResponse } from '@/entity/api';
 import { bold, bracketize } from '@/service/formatter';
 
@@ -11,7 +12,7 @@ export interface RawIssue {
 
 export interface Issue {
   id: string;
-  assignee: string;
+  assignee: string | null;
   title: string;
   label: string[];
   status: string;
@@ -69,14 +70,18 @@ export function mapIssuesToAssignee(issues: Issue[]): Record<string, Issue[]> {
     return Number(firstTokens[1]) <= Number(secondTokens[1]) ? -1 : 1;
   });
 
+  const keys = [...new Set(sorted.map(i => i.assignee))];
+
   const issueMap: Record<string, Issue[]> = {};
+  keys.forEach(k => {
+    const key = k ?? UNASSIGNED;
+    issueMap[key] = [];
+  });
 
   sorted.forEach(i => {
-    if (!issueMap[i.assignee]) {
-      issueMap[i.assignee] = [];
-    }
+    const key = i.assignee ?? UNASSIGNED;
 
-    issueMap[i.assignee].push(i);
+    issueMap[key].push(i);
   });
 
   return issueMap;

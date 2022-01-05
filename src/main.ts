@@ -18,6 +18,10 @@ export async function writeDailyReport(): Promise<void> {
 
     const issues = await jiraService.getSprintIssues(BOARD_ID);
 
+    console.log(issues);
+
+    /*
+
     const footer: Footer = {
       link: FOOTER,
       alias: 'Remote report link',
@@ -28,6 +32,7 @@ export async function writeDailyReport(): Promise<void> {
     }
 
     console.log('Process finished successfully');
+    */
   } catch (err) {
     console.error(err);
   }

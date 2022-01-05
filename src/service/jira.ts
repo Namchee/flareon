@@ -15,7 +15,6 @@ export class JiraRESTService implements JIRAService {
 
   public constructor(host: string, { email, token }: Credentials) {
     this.url = host + JIRA_API_URL;
-    console.log(this.url);
     this.headers = {
       Accept: 'application/json',
       Authorization: 'Basic ' + btoa(`${email}:${token}`),
@@ -85,7 +84,9 @@ export class JiraRESTService implements JIRAService {
     });
     title = title.trim();
 
-    const { emailAddress } = issue.fields.assignee as JIRAUser;
+    const email = issue.fields.assignee
+      ? (issue.fields.assignee as JIRAUser).emailAddress
+      : null;
 
     return {
       id: issue.key,
@@ -94,7 +95,7 @@ export class JiraRESTService implements JIRAService {
         : [],
       title,
       status: (issue.fields.status as IssueStatus).name,
-      assignee: emailAddress,
+      assignee: email,
     };
   }
 
