@@ -9,6 +9,7 @@ import type { Issue } from '@/entity/issue';
 import type { Footer, MessageBlock, MessageContextBlock, MessageTextBlock } from '@/entity/message';
 import type { User, UserAPIResponse } from '@/entity/user';
 import type { SlackError } from '@/entity/api';
+import { UNASSIGNED } from '@/constant/issue';
 
 export interface SlackService {
   postDailyReport(
@@ -89,8 +90,12 @@ export class SlackRESTService implements SlackService {
     };
 
     const content = Object.entries(issueMap).map(async ([mail, issues]) => {
-      const { id, name } = await this.getUserByEmail(mail);
-      const head = `${name} — ${this.mention(id, false)}`;
+      let head = mail;
+
+      if (mail !== UNASSIGNED) {
+        const { id, name } = await this.getUserByEmail(mail);
+        head = `${name} — ${this.mention(id, false)}`;
+      }
 
       const tasks = issues.map(i => formatIssueToListItem(i)).join('\n');
 

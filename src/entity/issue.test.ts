@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 
-import { UNASSIGNED } from '@/constant/issue';
 import { formatIssueToListItem, Issue, mapIssuesToAssignee } from '@/entity/issue';
 
 describe('formatIssueToListItem', () => {
@@ -150,7 +149,7 @@ describe('mapIssuesToAssignee', () => {
           assignee: 'lorem@ipsum.com',
         },
       ],
-      UNASSIGNED: [
+      Unassigned: [
         {
           id: 'BTDC-123',
           title: 'a',
