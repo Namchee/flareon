@@ -72,6 +72,7 @@ describe('JIRA REST Service', () => {
       label: [],
       status: 'Done',
       assignee: 'lorem@ipsum.com',
+      link: `${jiraHost}browse/BTDC`,
     });
     expect(issues[1]).toEqual({
       id: 'BTDC',
@@ -79,6 +80,7 @@ describe('JIRA REST Service', () => {
       label: ['Lorem Ipsum'],
       status: 'In Progress',
       assignee: 'foo@bar.com',
+      link: `${jiraHost}browse/BTDC`,
     });
   });
 });

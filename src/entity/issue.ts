@@ -1,6 +1,6 @@
-import { UNASSIGNED } from '@/constant/issue';
+import { LINK_PLACEHOLDER, UNASSIGNED } from '@/constant/issue';
 import { JiraAPIResponse } from '@/entity/api';
-import { bold, bracketize } from '@/service/formatter';
+import { bold, bracketize, linkify } from '@/service/formatter';
 
 export interface RawIssue {
   expand?: string;
@@ -16,6 +16,7 @@ export interface Issue {
   title: string;
   label: string[];
   status: string;
+  link: string;
 }
 
 export interface IssueStatus {
@@ -36,11 +37,12 @@ export interface IssueAPIResponse extends JiraAPIResponse {
  * @returns {string} issue in one-liner format
  */
 export function formatIssueToListItem(
-  { id, title, label, status }: Issue,
+  { id, title, label, status, link }: Issue,
 ): string {
   const key = bold(bracketize(id));
   const labels = label.map(l => bold(bracketize(l))).join(' ');
   const stat = bold(status.toUpperCase());
+  const details = linkify(link, LINK_PLACEHOLDER);
 
   return [
     '•',
@@ -49,6 +51,7 @@ export function formatIssueToListItem(
     title,
     '—',
     stat,
+    details,
   ].filter(s => Boolean(s)).join(' ');
 }
 
@@ -86,3 +89,4 @@ export function mapIssuesToAssignee(issues: Issue[]): Record<string, Issue[]> {
 
   return issueMap;
 }
+

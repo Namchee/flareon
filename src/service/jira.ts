@@ -4,18 +4,20 @@ import type { Credentials } from '@/entity/creds';
 import type { RawIssue, IssueAPIResponse, Issue, IssueStatus } from '@/entity/issue';
 import type { Sprint, SprintAPIResponse } from '@/entity/sprint';
 import type { JIRAUser } from '@/entity/user';
+import { getIssueLink } from '@/utils';
 
 export interface JIRAService {
   getSprintIssues(boardId: number): Promise<Issue[]>;
 }
 
 export class JiraRESTService implements JIRAService {
-  private readonly url: string;
+  private readonly host: string;
+  private readonly apiUrl: string;
   private readonly headers: Record<string, string>;
 
   public constructor(host: string, { email, token }: Credentials) {
-    this.url = new URL(JIRA_API_URL, host).toString();
-    console.log(this.url);
+    this.host = host;
+    this.apiUrl = new URL(JIRA_API_URL, host).toString();
     this.headers = {
       Accept: 'application/json',
       Authorization: 'Basic ' + btoa(`${email}:${token}`),
@@ -33,7 +35,7 @@ export class JiraRESTService implements JIRAService {
     const params = new URLSearchParams({
       state: 'active',
     });
-    const sprintUrl = `${this.url}/board/${boardId}/sprint?${params.toString()}`;
+    const sprintUrl = `${this.apiUrl}/board/${boardId}/sprint?${params.toString()}`;
 
     const response = await fetch(sprintUrl, {
       headers: this.headers,
@@ -55,7 +57,7 @@ export class JiraRESTService implements JIRAService {
    * @returns {Promise<RawIssue[]>} List of issues for the sprint
    */
   private async fetchSprintIssues(sprintId: number): Promise<RawIssue[]> {
-    const sprintUrl = `${this.url}/sprint/${sprintId}/issue`;
+    const sprintUrl = `${this.apiUrl}/sprint/${sprintId}/issue`;
 
     const response = await fetch(sprintUrl, {
       headers: this.headers,
@@ -97,6 +99,7 @@ export class JiraRESTService implements JIRAService {
       title,
       status: (issue.fields.status as IssueStatus).name,
       assignee: email,
+      link: getIssueLink(this.host, issue.key),
     };
   }
 
