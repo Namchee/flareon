@@ -14,3 +14,14 @@ export function getCurrentDate(): string {
     day: 'numeric',
   });
 }
+
+/**
+ * Get JIRA issue link from its key
+ *
+ * @param {string} host JIRA host
+ * @param {string} key JIRA issue key
+ * @returns {string} URL to JIRA issue page
+ */
+export function getIssueLink(host: string, key: string): string {
+  return new URL(`/browse/${key}`, host).toString();
+}

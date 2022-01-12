@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { formatIssueToListItem, Issue, mapIssuesToAssignee } from '@/entity/issue';
+import { LINK_PLACEHOLDER } from '@/constant/issue';
 
 describe('formatIssueToListItem', () => {
   it.concurrent('should format issue without label correctly', () => {
@@ -10,11 +11,12 @@ describe('formatIssueToListItem', () => {
       label: [],
       status: 'Done',
       assignee: '',
+      link: 'foo',
     };
 
     const md = formatIssueToListItem(issue);
 
-    expect(md).toBe('• *[BTDC-820]* Foo Bar — *DONE*');
+    expect(md).toBe(`• *[BTDC-820]* Foo Bar — *DONE* [${LINK_PLACEHOLDER}](foo)`);
   });
 
   it.concurrent('should format issue with labels correctly', () => {
@@ -24,11 +26,14 @@ describe('formatIssueToListItem', () => {
       label: ['Discovery', 'Bug'],
       status: 'Done',
       assignee: '',
+      link: 'foo',
     };
 
     const md = formatIssueToListItem(issue);
 
-    expect(md).toBe('• *[BTDC-820]* *[Discovery]* *[Bug]* Foo Bar — *DONE*');
+    expect(md).toBe(
+      `• *[BTDC-820]* *[Discovery]* *[Bug]* Foo Bar — *DONE* [${LINK_PLACEHOLDER}](foo)`,
+    );
   });
 });
 
@@ -41,6 +46,7 @@ describe('mapIssuesToAssignee', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: 'foo',
       },
       {
         id: 'BTDC-1020',
@@ -48,6 +54,7 @@ describe('mapIssuesToAssignee', () => {
         label: [],
         status: 'Done',
         assignee: 'a@b.com',
+        link: 'foo',
       },
       {
         id: 'BTDC-820',
@@ -55,6 +62,7 @@ describe('mapIssuesToAssignee', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: 'foo',
       },
     ];
 
@@ -68,6 +76,7 @@ describe('mapIssuesToAssignee', () => {
           label: [],
           status: 'Done',
           assignee: 'a@b.com',
+          link: 'foo',
         },
       ],
       'lorem@ipsum.com': [
@@ -77,6 +86,7 @@ describe('mapIssuesToAssignee', () => {
           label: [],
           status: 'Done',
           assignee: 'lorem@ipsum.com',
+          link: 'foo',
         },
         {
           id: 'BTDC-1000',
@@ -84,6 +94,7 @@ describe('mapIssuesToAssignee', () => {
           label: [],
           status: 'Done',
           assignee: 'lorem@ipsum.com',
+          link: 'foo',
         },
       ],
     });
@@ -97,6 +108,7 @@ describe('mapIssuesToAssignee', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: 'foo',
       },
       {
         id: 'BTDC-1020',
@@ -104,6 +116,7 @@ describe('mapIssuesToAssignee', () => {
         label: [],
         status: 'Done',
         assignee: 'a@b.com',
+        link: 'foo',
       },
       {
         id: 'BTDC-820',
@@ -111,6 +124,7 @@ describe('mapIssuesToAssignee', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: 'foo',
       },
       {
         id: 'BTDC-123',
@@ -118,6 +132,7 @@ describe('mapIssuesToAssignee', () => {
         label: [],
         status: 'Backlog',
         assignee: null,
+        link: 'foo',
       },
     ];
 
@@ -131,6 +146,7 @@ describe('mapIssuesToAssignee', () => {
           label: [],
           status: 'Done',
           assignee: 'a@b.com',
+          link: 'foo',
         },
       ],
       'lorem@ipsum.com': [
@@ -140,6 +156,7 @@ describe('mapIssuesToAssignee', () => {
           label: [],
           status: 'Done',
           assignee: 'lorem@ipsum.com',
+          link: 'foo',
         },
         {
           id: 'BTDC-1000',
@@ -147,6 +164,7 @@ describe('mapIssuesToAssignee', () => {
           label: [],
           status: 'Done',
           assignee: 'lorem@ipsum.com',
+          link: 'foo',
         },
       ],
       Unassigned: [
@@ -156,6 +174,7 @@ describe('mapIssuesToAssignee', () => {
           label: [],
           status: 'Backlog',
           assignee: null,
+          link: 'foo',
         },
       ],
     });

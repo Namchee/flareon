@@ -33,6 +33,7 @@ describe('Slack REST Service', () => {
           label: [],
           status: 'Done',
           assignee: 'lorem@ipsum.com',
+          link: '',
         },
       ];
 
@@ -58,6 +59,7 @@ describe('Slack REST Service', () => {
           label: [],
           status: 'Done',
           assignee: 'lorem@ipsum.com',
+          link: '',
         },
       ];
 
@@ -82,6 +84,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
       {
         id: 'BTDC-123',
@@ -89,6 +92,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
       {
         id: 'BTDC-123',
@@ -96,6 +100,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
     ];
 
@@ -113,6 +118,7 @@ describe('Slack REST Service', () => {
         label: ['Bar', 'Baz'],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
       {
         id: 'BTDC-123',
@@ -120,6 +126,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
       {
         id: 'BTDC-123',
@@ -127,6 +134,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
       {
         id: 'BTDC-456',
@@ -134,6 +142,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: null,
+        link: '',
       },
     ];
 
@@ -151,6 +160,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
       {
         id: 'BTDC-123',
@@ -158,6 +168,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
       {
         id: 'BTDC-123',
@@ -165,6 +176,7 @@ describe('Slack REST Service', () => {
         label: [],
         status: 'Done',
         assignee: 'lorem@ipsum.com',
+        link: '',
       },
     ];
     const footer: Footer = {
