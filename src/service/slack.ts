@@ -24,7 +24,7 @@ export class SlackRESTService implements SlackService {
 
   public constructor(token: string) {
     this.headers = {
-      Accept: 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       Authorization: `Bearer ${token}`,
     };
   }
@@ -39,7 +39,7 @@ export class SlackRESTService implements SlackService {
     const params = new URLSearchParams({
       email,
     });
-    const url = `${SLACK_API_URL}/user.lookupByEmail?${params.toString()}`;
+    const url = `${SLACK_API_URL}/users.lookupByEmail?${params.toString()}`;
     const response = await fetch(url, {
       headers: this.headers,
     });
@@ -85,7 +85,7 @@ export class SlackRESTService implements SlackService {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: bold(`Daily Standup ${getCurrentDate()} — ${this.mention(teamId, true)}`),
+        text: bold(`JIRA Tasks Report ${getCurrentDate()} — ${this.mention(teamId, true)}`),
       },
     };
 
@@ -113,6 +113,12 @@ export class SlackRESTService implements SlackService {
     return [header, ...body];
   }
 
+  /**
+   * Format footer for daily report
+   *
+   * @param {Footer} footer daily report footer
+   * @returns {MessageContextBlock} Slack message context blocks
+   */
   private formatFooter(footer: Footer): MessageContextBlock {
     return {
       type: 'context',

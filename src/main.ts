@@ -18,17 +18,17 @@ export async function writeDailyReport(): Promise<void> {
 
     const issues = await jiraService.getSprintIssues(BOARD_ID);
 
-    const footer: Footer = {
-      link: FOOTER,
-      alias: 'Remote report link',
-    };
-
     if (issues.length) {
+      const footer: Footer = {
+        link: FOOTER,
+        alias: 'Remote report link',
+      };
+
       await slackService.postDailyReport(TEAM_ID, CHANNEL_ID, issues, footer);
     }
 
     console.log('Process finished successfully');
   } catch (err) {
-    console.error(err);
+    console.error(`Process failed: ${err}`);
   }
 }

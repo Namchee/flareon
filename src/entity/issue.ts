@@ -1,6 +1,8 @@
-import { LINK_PLACEHOLDER, UNASSIGNED } from '@/constant/issue';
-import { JiraAPIResponse } from '@/entity/api';
 import { bold, bracketize, linkify } from '@/service/formatter';
+
+import { LINK_PLACEHOLDER, UNASSIGNED } from '@/constant/issue';
+
+import type { JiraAPIResponse } from '@/entity/api';
 
 export interface RawIssue {
   expand?: string;

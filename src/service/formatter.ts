@@ -29,12 +29,12 @@ export function bracketize(str: string): string {
 }
 
 /**
- * Generate markdown link from an URl
+ * Generate Slack hyperlink from an URL
  *
  * @param {string} link input URL
  * @param {string} alias URL alias
  * @returns {string} markdown link
  */
 export function linkify(link: string, alias: string): string {
-  return `[${alias}](${link})`;
+  return `<${link}|${alias}>`;
 }

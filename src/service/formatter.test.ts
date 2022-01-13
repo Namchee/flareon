@@ -46,6 +46,6 @@ describe('bracketize', () => {
     const alias = 'Google link';
     const output = linkify(text, alias);
 
-    expect(output).toBe('[Google link](https://www.google.com)');
+    expect(output).toBe('<https://www.google.com|Google link>');
   });
 });
