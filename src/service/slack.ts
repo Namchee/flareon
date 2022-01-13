@@ -85,7 +85,7 @@ export class SlackRESTService implements SlackService {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: bold(`Daily Standup ${getCurrentDate()} — ${this.mention(teamId, true)}`),
+        text: bold(`JIRA Tasks Report ${getCurrentDate()} — ${this.mention(teamId, true)}`),
       },
     };
 
@@ -153,7 +153,7 @@ export class SlackRESTService implements SlackService {
     }
 
     const reqBody = {
-      channel: channelId,
+      channel: 'U02AYL0FLR1',
       blocks: content,
     };
 
