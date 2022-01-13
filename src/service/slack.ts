@@ -153,7 +153,7 @@ export class SlackRESTService implements SlackService {
     }
 
     const reqBody = {
-      channel: 'U02AYL0FLR1',
+      channel: channelId,
       blocks: content,
     };
 
