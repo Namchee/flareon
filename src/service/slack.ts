@@ -113,6 +113,12 @@ export class SlackRESTService implements SlackService {
     return [header, ...body];
   }
 
+  /**
+   * Format footer for daily report
+   *
+   * @param {Footer} footer daily report footer
+   * @returns {MessageContextBlock} Slack message context blocks
+   */
   private formatFooter(footer: Footer): MessageContextBlock {
     return {
       type: 'context',

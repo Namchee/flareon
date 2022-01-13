@@ -1,5 +1,4 @@
 /* c8 ignore start */
-
 import { setupServer } from 'msw/node';
 import { handlers as jiraHandlers } from './jira';
 import { handlers as slackHandlers } from './slack';

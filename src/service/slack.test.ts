@@ -8,6 +8,7 @@ import { slackMockServer } from '@/mocks/server';
 
 import type { Issue } from '@/entity/issue';
 import type { Footer } from '@/entity/message';
+import { UNASSIGNED } from '@/constant/issue';
 
 describe('Slack REST Service', () => {
   beforeAll(() => {
@@ -153,5 +154,23 @@ describe('Slack REST Service', () => {
     const service = new SlackRESTService(token);
 
     await service.postDailyReport('13', 'realChannel', issues, footer);
+  });
+
+  it('should post daily report successfully with unassigned', async () => {
+    const token = 'realToken';
+    const issues: Issue[] = [
+      {
+        id: 'BTDC-456',
+        title: 'Foo Bar',
+        label: [],
+        status: 'Done',
+        assignee: UNASSIGNED,
+        link: '',
+      },
+    ];
+
+    const service = new SlackRESTService(token);
+
+    await service.postDailyReport('13', 'realChannel', issues);
   });
 });

@@ -64,6 +64,14 @@ describe('mapIssuesToAssignee', () => {
         assignee: 'lorem@ipsum.com',
         link: 'foo',
       },
+      {
+        id: 'BTDD-820',
+        title: 'c',
+        label: [],
+        status: 'Done',
+        assignee: 'lorem@ipsum.com',
+        link: 'foo',
+      },
     ];
 
     const issueMap = mapIssuesToAssignee(issues);
@@ -91,6 +99,14 @@ describe('mapIssuesToAssignee', () => {
         {
           id: 'BTDC-1000',
           title: 'a',
+          label: [],
+          status: 'Done',
+          assignee: 'lorem@ipsum.com',
+          link: 'foo',
+        },
+        {
+          id: 'BTDD-820',
+          title: 'c',
           label: [],
           status: 'Done',
           assignee: 'lorem@ipsum.com',

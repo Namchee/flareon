@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { rest } from 'msw';
 
 import { JIRA_API_URL } from '@/constant/api';
@@ -71,3 +72,5 @@ export const handlers = [
     }),
   )),
 ];
+
+/* c8 ignore end */
