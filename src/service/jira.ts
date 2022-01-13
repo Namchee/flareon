@@ -19,7 +19,7 @@ export class JiraRESTService implements JIRAService {
     this.host = host;
     this.apiUrl = new URL(JIRA_API_URL, host).toString();
     this.headers = {
-      Accept: 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       Authorization: 'Basic ' + btoa(`${email}:${token}`),
     };
   }

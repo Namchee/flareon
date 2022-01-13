@@ -24,7 +24,7 @@ export class SlackRESTService implements SlackService {
 
   public constructor(token: string) {
     this.headers = {
-      Accept: 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       Authorization: `Bearer ${token}`,
     };
   }
@@ -164,5 +164,7 @@ export class SlackRESTService implements SlackService {
 
       throw new Error(`Failed to post daily report: ${snakecaseToCapitalized(error)}`);
     }
+
+    console.log(result);
   }
 }
