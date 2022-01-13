@@ -23,7 +23,7 @@ describe('Slack REST Service', () => {
     slackMockServer.close();
   });
 
-  it('should throw an error when user is not found', async () => {
+  it('should throw an error when token is invalid', async () => {
     try {
       const token = 'foo';
       const issues: Issue[] = [
@@ -41,7 +41,7 @@ describe('Slack REST Service', () => {
 
       await service.postDailyReport('13', '123', issues);
 
-      throw new Error('Should not pass as user is not found');
+      throw new Error('Should not pass as token is invalid');
     } catch (err) {
       const { message } = err as Error;
 
@@ -73,40 +73,6 @@ describe('Slack REST Service', () => {
 
       expect(message).toBe('Failed to post daily report: Channel Not Found');
     }
-  });
-
-  it('should throw an error when the channel is not found', async () => {
-    const token = 'realToken';
-    const issues: Issue[] = [
-      {
-        id: 'BTDC-456',
-        title: 'Foo Bar',
-        label: [],
-        status: 'Done',
-        assignee: 'lorem@ipsum.com',
-        link: '',
-      },
-      {
-        id: 'BTDC-123',
-        title: 'Bar Baz',
-        label: [],
-        status: 'Done',
-        assignee: 'lorem@ipsum.com',
-        link: '',
-      },
-      {
-        id: 'BTDC-123',
-        title: 'Bar Baz',
-        label: [],
-        status: 'Done',
-        assignee: 'lorem@ipsum.com',
-        link: '',
-      },
-    ];
-
-    const service = new SlackRESTService(token);
-
-    await service.postDailyReport('13', 'realChannel', issues);
   });
 
   it('should post daily report successfully', async () => {
@@ -148,7 +114,7 @@ describe('Slack REST Service', () => {
 
     const service = new SlackRESTService(token);
 
-    await service.postDailyReport('13', 'realChannl', issues);
+    await service.postDailyReport('13', 'realChannel', issues);
   });
 
   it('should post daily report successfully with footer', async () => {
@@ -186,6 +152,6 @@ describe('Slack REST Service', () => {
 
     const service = new SlackRESTService(token);
 
-    await service.postDailyReport('13', 'realChannl', issues, footer);
+    await service.postDailyReport('13', 'realChannel', issues, footer);
   });
 });

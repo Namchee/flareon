@@ -1,9 +1,10 @@
+/* c8 ignore start */
 import { rest } from 'msw';
 
 import { SLACK_API_URL } from '@/constant/api';
 
 export const handlers = [
-  rest.get(`${SLACK_API_URL}/user.lookupByEmail`, (req, res, ctx) => {
+  rest.get(`${SLACK_API_URL}/users.lookupByEmail`, (req, res, ctx) => {
     if (req.headers.get('Authorization')?.endsWith('foo')) {
       return res(
         ctx.status(404),
@@ -38,7 +39,9 @@ export const handlers = [
       );
     }
 
-    const body = JSON.parse(req.body as string);
+    const body = req.body as {
+      channel: string,
+    };
 
     if (body.channel === '123') {
       return res(
@@ -58,3 +61,4 @@ export const handlers = [
     );
   }),
 ];
+/* c8 ignore end */

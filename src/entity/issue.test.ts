@@ -16,7 +16,7 @@ describe('formatIssueToListItem', () => {
 
     const md = formatIssueToListItem(issue);
 
-    expect(md).toBe(`• *[BTDC-820]* Foo Bar — *DONE* [${LINK_PLACEHOLDER}](foo)`);
+    expect(md).toBe(`• *[BTDC-820]* Foo Bar — *DONE* <foo|${LINK_PLACEHOLDER}>`);
   });
 
   it.concurrent('should format issue with labels correctly', () => {
@@ -32,7 +32,7 @@ describe('formatIssueToListItem', () => {
     const md = formatIssueToListItem(issue);
 
     expect(md).toBe(
-      `• *[BTDC-820]* *[Discovery]* *[Bug]* Foo Bar — *DONE* [${LINK_PLACEHOLDER}](foo)`,
+      `• *[BTDC-820]* *[Discovery]* *[Bug]* Foo Bar — *DONE* <foo|${LINK_PLACEHOLDER}>`,
     );
   });
 });

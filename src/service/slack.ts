@@ -164,7 +164,5 @@ export class SlackRESTService implements SlackService {
 
       throw new Error(`Failed to post daily report: ${snakecaseToCapitalized(error)}`);
     }
-
-    console.log(result);
   }
 }
