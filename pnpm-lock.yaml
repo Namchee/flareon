@@ -4,7 +4,7 @@ specifiers:
   '@cloudflare/workers-types': ^3.0.0
   '@typescript-eslint/eslint-plugin': ^5.8.1
   '@typescript-eslint/parser': ^5.8.1
-  c8: ^7.10.0
+  c8: ^7.11.0
   cross-fetch: ^3.1.4
   esbuild: ^0.14.8
   eslint: ^8.5.0
@@ -13,13 +13,13 @@ specifiers:
   msw: ^0.36.3
   typescript: ^4.3.2
   vite: ^2.7.9
-  vitest: ^0.0.122
+  vitest: ^0.0.142
 
 devDependencies:
   '@cloudflare/workers-types': 3.3.0
   '@typescript-eslint/eslint-plugin': 5.8.1_3a47348159e115370aa4cba56aba33b6
   '@typescript-eslint/parser': 5.8.1_eslint@8.5.0+typescript@4.5.4
-  c8: 7.10.0
+  c8: 7.11.0
   cross-fetch: 3.1.4
   esbuild: 0.14.9
   eslint: 8.5.0
@@ -28,7 +28,7 @@ devDependencies:
   msw: 0.36.3
   typescript: 4.5.4
   vite: 2.7.9
-  vitest: 0.0.122_c8@7.10.0+vite@2.7.9
+  vitest: 0.0.142_c8@7.11.0
 
 packages:
 
@@ -401,14 +401,8 @@ packages:
       ieee754: 1.2.1
     dev: true
 
-  /builtins/4.0.0:
-    resolution: {integrity: sha512-qC0E2Dxgou1IHhvJSLwGDSTvokbRovU5zZFuDY6oY8Y2lF3nGt5Ad8YZK7GMtqzY84Wu7pXTPeHQeHcXSXsRhw==}
-    dependencies:
-      semver: 7.3.5
-    dev: true
-
-  /c8/7.10.0:
-    resolution: {integrity: sha512-OAwfC5+emvA6R7pkYFVBTOtI5ruf9DahffGmIqUc9l6wEh0h7iAFP6dt/V9Ioqlr2zW5avX9U9/w1I4alTRHkA==}
+  /c8/7.11.0:
+    resolution: {integrity: sha512-XqPyj1uvlHMr+Y1IeRndC2X5P7iJzJlEJwBpCdBbq2JocXOgJfr+JVfJkyNMGROke5LfKrhSFXGFXnwnRJAUJw==}
     engines: {node: '>=10.12.0'}
     hasBin: true
     dependencies:
@@ -421,7 +415,7 @@ packages:
       istanbul-reports: 3.1.3
       rimraf: 3.0.2
       test-exclude: 6.0.0
-      v8-to-istanbul: 8.1.0
+      v8-to-istanbul: 8.1.1
       yargs: 16.2.0
       yargs-parser: 20.2.9
     dev: true
@@ -1330,12 +1324,6 @@ packages:
       resolve-from: 4.0.0
     dev: true
 
-  /import-meta-resolve/1.1.1:
-    resolution: {integrity: sha512-JiTuIvVyPaUg11eTrNDx5bgQ/yMKMZffc7YSjvQeSMXy58DO2SQ8BtAf3xteZvmzvjYh14wnqNjL8XVeDy2o9A==}
-    dependencies:
-      builtins: 4.0.0
-    dev: true
-
   /imurmurhash/0.1.4:
     resolution: {integrity: sha1-khi5srkoojixPcT7a21XbyMUU+o=}
     engines: {node: '>=0.8.19'}
@@ -1480,11 +1468,9 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /local-pkg/0.4.0:
-    resolution: {integrity: sha512-2XBWjO/v63JeR1HPzLJxdTVRQDB84Av2p2KtBA5ahvpyLUPubcAU6iXlAJrONcY7aSqgJhXxElAnKtnYsRolPQ==}
+  /local-pkg/0.4.1:
+    resolution: {integrity: sha512-lL87ytIGP2FU5PWwNDo0w3WhIo2gopIAxPg9RxDYF7m4rr5ahuZxP22xnJHIvaLTe4Z9P6uKKY2UHiwyB4pcrw==}
     engines: {node: '>=14'}
-    dependencies:
-      mlly: 0.2.10
     dev: true
 
   /locate-path/6.0.0:
@@ -1546,12 +1532,6 @@ packages:
     resolution: {integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==}
     dependencies:
       brace-expansion: 1.1.11
-    dev: true
-
-  /mlly/0.2.10:
-    resolution: {integrity: sha512-xfyW6c2QBGArtctzNnTV5leOKX8nOMz2simeubtXofdsdSJFSNw+Ncvrs8kxcN3pBrQLXuYBHNFV6NgZ5Ryf4A==}
-    dependencies:
-      import-meta-resolve: 1.1.1
     dev: true
 
   /ms/2.1.2:
@@ -1982,13 +1962,13 @@ packages:
     resolution: {integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=}
     dev: true
 
-  /tinypool/0.0.6:
-    resolution: {integrity: sha512-E9vY6eq/Q7fUlSt69cY3y7qXNbVOFaxP+lAEDMKMObLrmO0MmEdUPyjOMgepoMDw/ps/sazl7WIQglnUrunnLg==}
+  /tinypool/0.1.1:
+    resolution: {integrity: sha512-sW2fQZ2BRb/GX5v55NkHiTrbMLx0eX0xNpP+VGhOe2f7Oo04+LeClDyM19zCE/WCy7jJ8kzIJ0Ojrxj3UhN9Sg==}
     engines: {node: '>=14.0.0'}
     dev: true
 
-  /tinyspy/0.2.6:
-    resolution: {integrity: sha512-HXNA1PZ9p95rWK7h3DvWaDK06XmsjN3ldZjacW/1F0viVfPanTGSQ6l2iQyjNElD0Nd5ogfq/hT0sx2Hdyz4wQ==}
+  /tinyspy/0.2.8:
+    resolution: {integrity: sha512-4VXqQzzh9gC5uOLk77cLr9R3wqJq07xJlgM9IUdCNJCet139r+046ETKbU1x7mGs7B0k7eopyH5U6yflbBXNyA==}
     engines: {node: '>=14.0.0'}
     dev: true
 
@@ -2075,13 +2055,37 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /v8-to-istanbul/8.1.0:
-    resolution: {integrity: sha512-/PRhfd8aTNp9Ggr62HPzXg2XasNFGy5PBt0Rp04du7/8GNNSgxFL6WBTkgMKSL9bFjH+8kKEG3f37FmxiTqUUA==}
+  /v8-to-istanbul/8.1.1:
+    resolution: {integrity: sha512-FGtKtv3xIpR6BYhvgH8MI/y78oT7d8Au3ww4QIxymrCtZEh5b8gCw2siywE+puhEmuWKDtmfrvF5UlB298ut3w==}
     engines: {node: '>=10.12.0'}
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       convert-source-map: 1.8.0
       source-map: 0.7.3
+    dev: true
+
+  /vite/2.7.10:
+    resolution: {integrity: sha512-KEY96ntXUid1/xJihJbgmLZx7QSC2D4Tui0FdS0Old5OokYzFclcofhtxtjDdGOk/fFpPbHv9yw88+rB93Tb8w==}
+    engines: {node: '>=12.2.0'}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+    dependencies:
+      esbuild: 0.13.15
+      postcss: 8.4.5
+      resolve: 1.20.0
+      rollup: 2.62.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /vite/2.7.9:
@@ -2108,16 +2112,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.0.122_c8@7.10.0+vite@2.7.9:
-    resolution: {integrity: sha512-ayAY8Ue444rutcU6gXO2fTASmVSEEYGBtrGSRgnVBrBo+RlOkv0i67yUJFLyH3krtKdLbbKGk+lQ5B7kBvhX7w==}
+  /vitest/0.0.142_c8@7.11.0:
+    resolution: {integrity: sha512-d1Ya3Jd/RKYfH9qJHlrCw7AU3Xne7sjdjLfR0Kh+UsYmpRvdYsWAA8AkrIkv2U/N77wmA59LlqooMBI5GoK/ZQ==}
     engines: {node: '>=14.14.0'}
     hasBin: true
     peerDependencies:
+      '@vitest/ui': '*'
       c8: '*'
       happy-dom: '*'
       jsdom: '*'
-      vite: ^2.7.1
     peerDependenciesMeta:
+      '@vitest/ui':
+        optional: true
       c8:
         optional: true
       happy-dom:
@@ -2127,12 +2133,16 @@ packages:
     dependencies:
       '@types/chai': 4.3.0
       '@types/chai-subset': 1.3.3
-      c8: 7.10.0
+      c8: 7.11.0
       chai: 4.3.4
-      local-pkg: 0.4.0
-      tinypool: 0.0.6
-      tinyspy: 0.2.6
-      vite: 2.7.9
+      local-pkg: 0.4.1
+      tinypool: 0.1.1
+      tinyspy: 0.2.8
+      vite: 2.7.10
+    transitivePeerDependencies:
+      - less
+      - sass
+      - stylus
     dev: true
 
   /wcwidth/1.0.1:
